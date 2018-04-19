@@ -30,11 +30,12 @@ app.post('/webhook', (req, res) => {
 						handlePostback(sender_psid, webhook_event.postback);
 					}
 				}else{
+					console.log(event.postback.payload);
 
-					if(event.postback && event.postback.payload === GET_STARTED_PAYLOAD ){
+					//if(event.postback && event.postback.payload === GET_STARTED_PAYLOAD ){
 						var msg = "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!";
 						callSendAPI(sender_psid, webhook_event.message);        
-					}
+					//}
 
 				}
 
