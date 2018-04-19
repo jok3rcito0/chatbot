@@ -34,7 +34,8 @@ app.post('/webhook', (req, res) => {
 
 					if(event.postback && event.postback.payload === 'GET_STARTED_PAYLOAD' ){
 						let msg = {"text": "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!"}
-						callSendAPI(sender_psid, msg);        
+						callSendAPI(sender_psid, msg);
+						handleAttachment(sender_psid, '416389662155453');
 					}
 
 				}
@@ -48,6 +49,22 @@ app.post('/webhook', (req, res) => {
 	}
 
 });
+
+//Handle send files
+function handleAttachment(sender_psid, received_message) {
+	let response;
+
+	response = {
+		"attachment": {
+			"type":"image",
+			"payload": {
+				"attachment_id": received_message
+			}
+		}
+	}
+
+	callSendAPI(sender_psid, response);
+}
 
 
 // Handles messages events
@@ -87,7 +104,7 @@ function handleMessage(sender_psid, received_message) {
 		}
 	}
 
-	callSendAPI(sender_psid, response);    
+	callSendAPI(sender_psid, response);
 }
 
 // Handles messaging_postbacks events
