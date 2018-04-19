@@ -143,9 +143,10 @@ function callSendAPI(sender_psid, response) {
 }
 
 function startedPack(sender_psid){
-	let msg = {"text": "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!"}
-		callSendAPI(sender_psid, msg); //text
-	msg.text = 'Antes de empezar, checa las instrucciones:';
+	let msg = {
+		"text": "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!",
+		"sender_action": "typing_on"}
+	//msg.text = 'Antes de empezar, checa las instrucciones:';
 		callSendAPI(sender_psid, msg); //text
 		handleAttachment(sender_psid, '416389662155453'); //gif 
 }
