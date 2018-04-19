@@ -148,17 +148,6 @@ function startedPack(sender_psid){
 	let msg = { "text": "Antes de empezar, checa las instrucciones:" }
 		callSendAPI(sender_psid, msg); //text
 		handleAttachment(sender_psid, '416389662155453'); //gif 
-		"quick_replies":[
-      {
-        "content_type":"text",
-        "title":"Search",
-        "payload":"<POSTBACK_PAYLOAD>",
-        "image_url":"http://example.com/img/red.png"
-      },
-      {
-        "content_type":"location"
-      }
-    ]
 		msg = {
 			"text": " ", 
 			"quick_replies": [
