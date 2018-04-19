@@ -33,7 +33,7 @@ app.post('/webhook', (req, res) => {
 					console.log(event.postback);
 
 					if(event.postback && event.postback.payload === 'GET_STARTED_PAYLOAD' ){
-						let msg = "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!";
+						let msg = {"text": "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!"}
 						callSendAPI(sender_psid, msg);        
 					}
 
