@@ -1,0 +1,19 @@
+{
+  "name": "bot_poll",
+  "version": "1.0.0",
+  "description": "a bot for make polls",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.element.com.mx:de-bolsillo/bot-miselecciondebolsillo-2018.git"
+  },
+  "author": "Juan Herrera",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  }
+}
