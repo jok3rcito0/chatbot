@@ -9,9 +9,10 @@ app.listen(process.env.PORT || 443, () => console.log('webhook is listening'));
 
 app.post('/webhook', (req, res) => { 
   let body = req.body;
+  console.log('--- EL BODY ---');
   console.log(body);
-  console.log(req);
-  
+  console.log('el body');
+
   // Checks this is an event from a page subscription
   if (body.object === 'page') {
 
