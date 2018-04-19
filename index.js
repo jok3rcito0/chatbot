@@ -22,7 +22,10 @@ app.post('/webhook', (req, res) => {
 			let sender_psid = webhook_event.sender.id;
 
 			entry.messaging.forEach(function(event) {
-				console.log('evento: ' + event.message);
+				console.log('--DEBUG----DEBUG----DEBUG--');
+				console.log(event);
+				console.log(event.message);
+				console.log('--DEBUG----DEBUG----DEBUG--');
 			});
 
 			/*if (webhook_event.message) {
