@@ -9,7 +9,9 @@ app.listen(process.env.PORT || 443, () => console.log('webhook is listening'));
 
 app.post('/webhook', (req, res) => { 
   let body = req.body;
-
+  console.log(body);
+  console.log(req);
+  
   // Checks this is an event from a page subscription
   if (body.object === 'page') {
 
@@ -60,3 +62,5 @@ app.get('/webhook', (req, res) => {
   }
 });
 
+
+//EAADEK2GJNwwBAKcDvnBWh8KZB8GylFiaKpi0gXpBazix9GsKZBYvWjG9xrDqXwu7IMLLZBs9R4DGPTMSNyJZB5zou3fCN5ZA9aofppe6DmOgQnzqJtt6MCyIeGzb3g4Pk5V492lVpsXGQiGgDAHCaJc7jpazydDIPINkLqzVhsDHFucMgsigR
