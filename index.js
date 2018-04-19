@@ -125,7 +125,9 @@ function callSendAPI(sender_psid, response) {
 		"recipient": {
 			"id": sender_psid
 		},
-		"message": response
+		"message": response,
+		"messaging_type": "RESPONSE",
+		"notification_type" : "REGULAR"
 	}
 
 	request({
@@ -143,9 +145,7 @@ function callSendAPI(sender_psid, response) {
 }
 
 function startedPack(sender_psid){
-	let msg = {
-		"text": "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!",
-		"sender_action": "typing_on"}
+	let msg = { "text": "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!" }
 	//msg.text = 'Antes de empezar, checa las instrucciones:';
 		callSendAPI(sender_psid, msg); //text
 		handleAttachment(sender_psid, '416389662155453'); //gif 
