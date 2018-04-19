@@ -35,6 +35,11 @@ app.post('/webhook', (req, res) => {
 					console.log(event.postback);
 					console.log(event.postback.payload);
 					console.log('--DEBUG----DEBUG----DEBUG--');
+					
+					if(event.postback && event.postback.payload === USER_DEFINED_PAYLOAD ){
+						var msg = "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!";
+					}
+
 				}
 
 			});
