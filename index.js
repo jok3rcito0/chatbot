@@ -33,9 +33,7 @@ app.post('/webhook', (req, res) => {
 					console.log(event.postback);
 
 					if(event.postback && event.postback.payload === 'GET_STARTED_PAYLOAD' ){
-						let msg = {"text": "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!"}
-						callSendAPI(sender_psid, msg);
-						handleAttachment(sender_psid, '416389662155453');
+						startedPack(sender_psid);
 					}
 
 				}
@@ -144,30 +142,13 @@ function callSendAPI(sender_psid, response) {
 	});
 }
 
-
-function setupGetStartedButton(res){
-	var messageData = {
-		"get_started":[{
-			"payload":"GET_STARTED_PAYLOAD"
-		}]
-	};
-
-	request({
-		url: 'https://graph.facebook.com/v2.12/me/messenger_profile?access_token='+ PAGE_ACCESS_TOKEN,
-		method: 'POST',
-		headers: {'Content-Type': 'application/json'},
-		form: messageData
-	},
-
-	function (error, response, body) {
-		if (!error && response.statusCode == 200) {
-			res.send(body);
-		} else { 
-			res.send(body);
-		}
-	});
+function startedPack(sender_psid){
+	let msg = {"text": "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!"}
+		callSendAPI(sender_psid, msg); //text
+	msg.text = 'Antes de empezar, checa las instrucciones:';
+		callSendAPI(sender_psid, msg); //text
+		handleAttachment(sender_psid, '416389662155453'); //gif 
 }
-
 
 app.get('/webhook', (req, res) => {
 	let VERIFY_TOKEN = "Holamund0_$MwWi1t00os"
@@ -181,9 +162,4 @@ app.get('/webhook', (req, res) => {
 			res.sendStatus(403);      
 		}
 	}
-});
-
-//set up as bot with 'get started button'
-app.get('/setup',function(req,res){
-    setupGetStartedButton(res);
 });
