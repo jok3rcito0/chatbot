@@ -22,17 +22,22 @@ app.post('/webhook', (req, res) => {
 			let sender_psid = webhook_event.sender.id;
 
 			entry.messaging.forEach(function(event) {
-				console.log('--DEBUG----DEBUG----DEBUG--');
-				console.log(event);
-				console.log(event.message);
-				console.log('--DEBUG----DEBUG----DEBUG--');
-			});
+				if(event.message){
+					//send response
+					if(webhook_event.message) {
+						handleMessage(sender_psid, webhook_event.message);        
+					}else if(webhook_event.postback) {
+						handlePostback(sender_psid, webhook_event.postback);
+					}
+				}else{
+					console.log('--DEBUG----DEBUG----DEBUG--');
+					console.log(event);
+					console.log(event.postback);
+					console.log(event.postback.payload);
+					console.log('--DEBUG----DEBUG----DEBUG--');
+				}
 
-			/*if (webhook_event.message) {
-				handleMessage(sender_psid, webhook_event.message);        
-			} else if (webhook_event.postback) {
-				handlePostback(sender_psid, webhook_event.postback);
-			}*/
+			});
 		});
 
 		res.status(200).send('EVENT_RECEIVED');
