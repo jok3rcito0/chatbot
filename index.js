@@ -17,7 +17,7 @@ app.post('/webhook', (req, res) => {
 			let pageID = entry.id;
 			let timeOfEvent = entry.time;
 
-			console.log(pageID, timeOfEvent);
+			console.log('pageID : ' + pageID, 'time: ' + timeOfEvent);
 
 		/*
 			if (event.message) {
