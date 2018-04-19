@@ -14,40 +14,22 @@ app.post('/webhook', (req, res) => {
 
 	if (body.object === 'page') {
 		body.entry.forEach(function(entry) {
+			//Set Config
 			let pageID = entry.id;
 			let timeOfEvent = entry.time;
-
-			console.log('pageID : ' + pageID, 'time: ' + timeOfEvent);
-
-		/*
-			if (event.message) {
-				//lo antetior?
-				// Gets the message.
-				
-				let webhook_event = entry.messaging[0];
-				let sender_psid = webhook_event.sender.id;
-
-				if (webhook_event.message) {
-					handleMessage(sender_psid, webhook_event.message);        
-				} else if (webhook_event.postback) {
-					handlePostback(sender_psid, webhook_event.postback);
-				}
-			} else {
-				if(event.postback && event.postback.payload === USER_DEFINED_PAYLOAD ){
-					var msg = "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!";
-					//sendMessage(event.sender.id,msg);
-				}
-			}
-		*/
 			// Gets the message.
 			let webhook_event = entry.messaging[0];
 			let sender_psid = webhook_event.sender.id;
 
-			if (webhook_event.message) {
+			entry.messaging.forEach(function(event) {
+				console.log('evento: ' + event.message);
+			});
+
+			/*if (webhook_event.message) {
 				handleMessage(sender_psid, webhook_event.message);        
 			} else if (webhook_event.postback) {
 				handlePostback(sender_psid, webhook_event.postback);
-			}
+			}*/
 		});
 
 		res.status(200).send('EVENT_RECEIVED');
