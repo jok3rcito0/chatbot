@@ -159,8 +159,16 @@ function startedPack(sender_psid){
         "content_type":"location"
       }
     ]
-		msg.text = ' ';
-		msg.quick_replies = [{ "content_type":"text", "title":"Search", "payload":"<POSTBACK_PAYLOAD>", "image_url":"http://example.com/img/red.png"},{"content_type":"location"}];
+		msg = {
+			"text": " ", 
+			"quick_replies": [
+				{ "content_type":"text", 
+				"title":"Search", 
+				"payload":"<POSTBACK_PAYLOAD>", 
+				"image_url":"http://example.com/img/red.png"
+				},{"content_type":"location"}
+			]
+		};
 
 		setTimeout(callSendAPI(sender_psid, msg), 3000);
 }
