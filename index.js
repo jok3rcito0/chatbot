@@ -14,18 +14,31 @@ app.post('/webhook', (req, res) => {
 
 	if (body.object === 'page') {
 		body.entry.forEach(function(entry) {
-			// Gets the message.
-			let webhook_event = entry.messaging[0];
-			//console.log(webhook_event);
+			let pageID = entry.id;
+			let timeOfEvent = entry.time;
 
-			let sender_psid = webhook_event.sender.id;
-			//console.log('Sender PSID: ' + sender_psid);ç
+			entry.messaging.forEach(function(event) {
+				console.log('---AKA--');
+				console.log(event.message);
+				console.log('---AKA--');
+				if (event.message) {
+					//lo antetior?
+					// Gets the message.
+					
+					/*let webhook_event = entry.messaging[0];
+					let sender_psid = webhook_event.sender.id;
 
-			if (webhook_event.message) {
-				handleMessage(sender_psid, webhook_event.message);        
-			} else if (webhook_event.postback) {
-				handlePostback(sender_psid, webhook_event.postback);
-			}
+					if (webhook_event.message) {
+						handleMessage(sender_psid, webhook_event.message);        
+					} else if (webhook_event.postback) {
+						handlePostback(sender_psid, webhook_event.postback);
+					}*/
+				} else {
+					if(event.postback && event.postback.payload === USER_DEFINED_PAYLOAD ){
+						var msg = "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!"
+						//sendMessage(event.sender.id,msg);
+					}
+				}
 		});
 
 		res.status(200).send('EVENT_RECEIVED');
@@ -115,6 +128,30 @@ function callSendAPI(sender_psid, response) {
 }
 
 
+function setupGetStartedButton(res){
+	var messageData = {
+		"get_started":[{
+			"payload":"USER_DEFINED_PAYLOAD"
+		}]
+	};
+
+	request({
+		url: 'https://graph.facebook.com/v2.12/me/messenger_profile?access_token='+ PAGE_ACCESS_TOKEN,
+		method: 'POST',
+		headers: {'Content-Type': 'application/json'},
+		form: messageData
+	},
+
+	function (error, response, body) {
+		if (!error && response.statusCode == 200) {
+			res.send(body);
+		} else { 
+			res.send(body);
+		}
+	});
+}
+
+
 app.get('/webhook', (req, res) => {
 	let VERIFY_TOKEN = "Holamund0_$MwWi1t00os"
 	let mode = req.query['hub.mode'];
@@ -127,4 +164,9 @@ app.get('/webhook', (req, res) => {
 			res.sendStatus(403);      
 		}
 	}
+});
+
+//set up as bot with 'get started button'
+app.get('/setup',function(req,res){
+    setupGetStartedButton(res);
 });
