@@ -145,10 +145,24 @@ function callSendAPI(sender_psid, response) {
 }
 
 function startedPack(sender_psid){
-	let msg = { "text": "El Mundial ya está aquí y todos queremos ser parte de él. Apoya a tu equipo favorito en nuestro Mundial DeBolsillo. ¡Participa!" }
-	//msg.text = 'Antes de empezar, checa las instrucciones:';
+	let msg = { "text": "Antes de empezar, checa las instrucciones:" }
 		callSendAPI(sender_psid, msg); //text
 		handleAttachment(sender_psid, '416389662155453'); //gif 
+		"quick_replies":[
+      {
+        "content_type":"text",
+        "title":"Search",
+        "payload":"<POSTBACK_PAYLOAD>",
+        "image_url":"http://example.com/img/red.png"
+      },
+      {
+        "content_type":"location"
+      }
+    ]
+		msg.text = ' ';
+		msg.quick_replies = [{ "content_type":"text", "title":"Search", "payload":"<POSTBACK_PAYLOAD>", "image_url":"http://example.com/img/red.png"},{"content_type":"location"}];
+
+		setTimeout(callSendAPI(sender_psid, msg), 3000);
 }
 
 app.get('/webhook', (req, res) => {
