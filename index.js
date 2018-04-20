@@ -31,13 +31,14 @@ app.post('/webhook', (req, res) => {
 					}
 				}else{
 					console.log(event.postback);
+					console.log('AQUI SE CACHA EL PAYLOAD?');
+					//PRE_START_PAYLOAD
 
 					if(event.postback && event.postback.payload === 'GET_STARTED_PAYLOAD' ){
-						//sender Action
 						handleSenderAction(sender_psid);
 						let msg = { "text": "Antes de empezar, checa las instrucciones:" }
 						callSendAPI(sender_psid, msg);
-						startedPack(sender_psid);
+						setTimeout(startedPack(sender_psid), 3500);
 					}
 
 				}
@@ -67,7 +68,7 @@ function handleSenderAction(sender_psid, action='typing_on'){
 		"json": request_body
 	}, (err, res, body) => {
 		if (!err) {
-			console.log('sender action ok!')
+			console.log('sender action ok!');
 		} else {
 			console.error("sender action error:" + err);
 		}
@@ -90,7 +91,6 @@ function handleAttachment(sender_psid, received_message) {
 
 	callSendAPI(sender_psid, response);
 }
-
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
@@ -173,9 +173,20 @@ function callSendAPI(sender_psid, response) {
 }
 
 function startedPack(sender_psid){
-	handleAttachment(sender_psid, '416389662155453'); //gif 
-	handleSenderAction(sender_psid, 'typing_off');
+	handleAttachment(sender_psid, '416389662155453');
+	setTimeout(handleSenderAction(sender_psid, 'typing_off'), 2000);
+	
 	//show menu with option
+	let replies = {
+		"text": "Listo?",
+		"quick_replies":[
+			{
+				"content_type":"text",
+				"title":"Participar en la Dinámica",
+				"payload":"PRE_START_PAYLOAD"
+			}
+		]
+	}
 }
 
 app.get('/webhook', (req, res) => {
