@@ -21,6 +21,8 @@ app.post('/webhook', (req, res) => {
 
 			entry.messaging.forEach(function(event) {
 				console.log(event);
+				console.log(webhook_event);
+				
 				if(event.message){
 					//send response
 					if(webhook_event.message) {
