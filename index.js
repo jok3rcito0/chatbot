@@ -20,11 +20,11 @@ app.post('/webhook', (req, res) => {
 			let webhook_event = entry.messaging[0];
 			let sender_psid = webhook_event.sender.id;
 			let message = webhook_event.message;
-
+			console.log('---ENTRYYYY---');
+			console.log(entry);
+			console.log('---ENTRYYYY---');
 			if(message && message.quick_reply){
-				console.log('Se envia algo predefinido');
-				console.log(webhook_event.postback);
-				console.log(message.quick_reply);
+				executeAction(sender_psid, message.quick_reply.payload)
 			}else if(message && message.text){
 				console.log('es un texto que el usuario envia');
 			}else{
@@ -49,8 +49,20 @@ app.post('/webhook', (req, res) => {
 	} else {
 		res.sendStatus(404);
 	}
-
 });
+
+function executeAction(sender_psid, payload){
+	switch (payload) {
+		case 'PRE_START_PAYLOAD':
+			handleSenderAction(sender_psid);
+			let msg = {'text':'Antes de comenzar ingresa tu nombre sin apellidos'}
+			callSendAPI(sender_psid, msg);
+			break;
+	
+		default:
+			break;
+	}
+}
 
 function handleSenderAction(sender_psid, action='typing_on'){
 	let request_body = {
