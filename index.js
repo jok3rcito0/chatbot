@@ -191,6 +191,7 @@ function startedPack(sender_psid){
 			}
 		]
 	}
+	callSendAPI(sender_psid, replies);
 }
 
 app.get('/webhook', (req, res) => {
