@@ -33,7 +33,8 @@ app.post('/webhook', (req, res) => {
 					console.log(event.postback);
 
 					if(event.postback && event.postback.payload === 'GET_STARTED_PAYLOAD' ){
-						startedPack(sender_psid);
+						console.log('start');
+						//startedPack(sender_psid);
 					}
 
 				}
@@ -147,6 +148,7 @@ function callSendAPI(sender_psid, response) {
 function startedPack(sender_psid){
 	let msg = { "text": "Antes de empezar, checa las instrucciones:" }
 		callSendAPI(sender_psid, msg); //text
+		
 		handleAttachment(sender_psid, '416389662155453'); //gif 
 }
 
