@@ -38,7 +38,9 @@ app.post('/webhook', (req, res) => {
 						handleSenderAction(sender_psid);
 						let msg = { "text": "Antes de empezar, checa las instrucciones:" }
 						callSendAPI(sender_psid, msg);
-						setTimeout(startedPack(sender_psid), 3500);
+						setTimeout(function() {
+							startedPack(sender_psid)
+						}, 3000);
 					}
 
 				}
@@ -174,7 +176,9 @@ function callSendAPI(sender_psid, response) {
 
 function startedPack(sender_psid){
 	handleAttachment(sender_psid, '416389662155453');
-	setTimeout(handleSenderAction(sender_psid, 'typing_off'), 2000);
+	setTimeout(function() {
+		handleSenderAction(sender_psid, 'typing_off')
+	}, 2000);
 	
 	//show menu with option
 	let replies = {
