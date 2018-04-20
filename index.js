@@ -16,38 +16,38 @@ app.post('/webhook', (req, res) => {
 		body.entry.forEach(function(entry) {
 			let pageID = entry.id;
 			let timeOfEvent = entry.time;
+			
 			let webhook_event = entry.messaging[0];
 			let sender_psid = webhook_event.sender.id;
 
-			entry.messaging.forEach(function(event) {
-				console.log(event);
-				console.log(webhook_event);
-				
-				if(event.message){
-					//send response
-					if(webhook_event.message) {
-						//handleMessage(sender_psid, webhook_event.message);
-					}else if(webhook_event.postback) {
-						//handleSenderAction(sender_psid);
-						//handlePostback(sender_psid, webhook_event.postback);
-					}
-				}else{
-					console.log(event.postback);
-					console.log('AQUI SE CACHA EL PAYLOAD?');
-					//PRE_START_PAYLOAD
+			console.log(webhook_event);
 
-					if(event.postback && event.postback.payload === 'GET_STARTED_PAYLOAD' ){
-						handleSenderAction(sender_psid);
-						let msg = { "text": "Antes de empezar, checa las instrucciones:" }
-						callSendAPI(sender_psid, msg);
-						setTimeout(function() {
-							startedPack(sender_psid)
-						}, 3000);
-					}
+			if(webhook_event.message){
+				//if(webhook_event.message) {
+					//handleMessage(sender_psid, webhook_event.message);
+				//}else if(webhook_event.postback) {
+					//handleSenderAction(sender_psid);
+					//handlePostback(sender_psid, webhook_event.postback);
+				//}
+			}else{
+				console.log('Este es el payload de getstarted');
+				//PRE_START_PAYLOAD
 
+				if(webhook_event.postback && webhook_event.postback.payload === 'GET_STARTED_PAYLOAD' ){
+					handleSenderAction(sender_psid);
+					let msg = { "text": "Antes de empezar, checa las instrucciones:" }
+					callSendAPI(sender_psid, msg);
+					setTimeout(function() {
+						startedPack(sender_psid)
+					}, 3000);
 				}
 
-			});
+			}
+
+			/*entry.messaging.forEach(function(event) {
+				console.log(event);
+				console.log(webhook_event);
+			});*/
 		});
 
 		res.status(200).send('EVENT_RECEIVED');
@@ -178,7 +178,7 @@ function callSendAPI(sender_psid, response) {
 
 function startedPack(sender_psid){
 	handleAttachment(sender_psid, '416389662155453');
-	//show menu with option
+
 	let replies = {
 		"text": "Listo?",
 		"quick_replies":[
@@ -191,7 +191,7 @@ function startedPack(sender_psid){
 	}
 	setTimeout(function() {
 		callSendAPI(sender_psid, replies)
-	}, 4000);
+	}, 3000);
 	
 }
 
