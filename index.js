@@ -176,22 +176,21 @@ function callSendAPI(sender_psid, response) {
 
 function startedPack(sender_psid){
 	handleAttachment(sender_psid, '416389662155453');
-	setTimeout(function() {
-		handleSenderAction(sender_psid, 'typing_off')
-	}, 2000);
-	
 	//show menu with option
 	let replies = {
 		"text": "Listo?",
 		"quick_replies":[
 			{
 				"content_type":"text",
-				"title":"Participar en la Dinámica",
+				"title":"Participar",
 				"payload":"PRE_START_PAYLOAD"
 			}
 		]
 	}
-	callSendAPI(sender_psid, replies);
+	setTimeout(function() {
+		callSendAPI(sender_psid, replies)
+	}, 4000);
+	
 }
 
 app.get('/webhook', (req, res) => {
