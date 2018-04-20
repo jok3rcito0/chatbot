@@ -25,8 +25,10 @@ app.post('/webhook', (req, res) => {
 				if(event.message){
 					//send response
 					if(webhook_event.message) {
+						handleSenderAction(sender_psid);
 						handleMessage(sender_psid, webhook_event.message);
 					}else if(webhook_event.postback) {
+						handleSenderAction(sender_psid);
 						handlePostback(sender_psid, webhook_event.postback);
 					}
 				}else{
@@ -37,7 +39,7 @@ app.post('/webhook', (req, res) => {
 						handleSenderAction(sender_psid);
 						let msg = { "text": "Antes de empezar, checa las instrucciones:" }
 						callSendAPI(sender_psid, msg);
-						handleSenderAction(sender_psid, 'typing_off');
+						//handleSenderAction(sender_psid, 'typing_off');
 						startedPack(sender_psid);
 					}
 
