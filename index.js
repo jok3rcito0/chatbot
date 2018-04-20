@@ -19,20 +19,15 @@ app.post('/webhook', (req, res) => {
 			
 			let webhook_event = entry.messaging[0];
 			let sender_psid = webhook_event.sender.id;
+			let message = webhook_event.message;
 
-			console.log(webhook_event);
-
-			if(webhook_event.message){
-				//if(webhook_event.message) {
-					//handleMessage(sender_psid, webhook_event.message);
-				//}else if(webhook_event.postback) {
-					//handleSenderAction(sender_psid);
-					//handlePostback(sender_psid, webhook_event.postback);
-				//}
+			if(message && message.quick_reply){
+				console.log('Se envia algo predefinido');
+				console.log(webhook_event.postback);
+				console.log(message.quick_reply);
+			}else if(message && message.text){
+				console.log('es un texto que el usuario envia');
 			}else{
-				console.log('Este es el payload de getstarted');
-				//PRE_START_PAYLOAD
-
 				if(webhook_event.postback && webhook_event.postback.payload === 'GET_STARTED_PAYLOAD' ){
 					handleSenderAction(sender_psid);
 					let msg = { "text": "Antes de empezar, checa las instrucciones:" }
@@ -71,9 +66,7 @@ function handleSenderAction(sender_psid, action='typing_on'){
 		"method": "POST",
 		"json": request_body
 	}, (err, res, body) => {
-		if (!err) {
-			console.log('sender action ok!');
-		} else {
+		if (err) {
 			console.error("sender action error:" + err);
 		}
 	});
@@ -167,10 +160,7 @@ function callSendAPI(sender_psid, response) {
 		"method": "POST",
 		"json": request_body
 	}, (err, res, body) => {
-		if (!err) {
-			console.log('message sent!');
-			//handleSenderAction(sender_psid, 'typing_off');
-		} else {
+		if (err) {
 			console.error("Unable to send message:" + err);
 		}
 	});
@@ -178,7 +168,7 @@ function callSendAPI(sender_psid, response) {
 
 function startedPack(sender_psid){
 	handleAttachment(sender_psid, '416389662155453');
-
+	handleSenderAction(sender_psid);
 	let replies = {
 		"text": "Listo?",
 		"quick_replies":[
