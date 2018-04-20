@@ -14,10 +14,8 @@ app.post('/webhook', (req, res) => {
 
 	if (body.object === 'page') {
 		body.entry.forEach(function(entry) {
-			//Set Config
 			let pageID = entry.id;
 			let timeOfEvent = entry.time;
-			// Gets the message.
 			let webhook_event = entry.messaging[0];
 			let sender_psid = webhook_event.sender.id;
 
@@ -39,7 +37,6 @@ app.post('/webhook', (req, res) => {
 						handleSenderAction(sender_psid);
 						let msg = { "text": "Antes de empezar, checa las instrucciones:" }
 						callSendAPI(sender_psid, msg);
-						//handleSenderAction(sender_psid, 'typing_off');
 						startedPack(sender_psid);
 					}
 
@@ -167,7 +164,8 @@ function callSendAPI(sender_psid, response) {
 		"json": request_body
 	}, (err, res, body) => {
 		if (!err) {
-			console.log('message sent!')
+			console.log('message sent!');
+			//handleSenderAction(sender_psid, 'typing_off');
 		} else {
 			console.error("Unable to send message:" + err);
 		}
@@ -176,6 +174,7 @@ function callSendAPI(sender_psid, response) {
 
 function startedPack(sender_psid){
 	handleAttachment(sender_psid, '416389662155453'); //gif 
+	handleSenderAction(sender_psid, 'typing_off');
 	//show menu with option
 }
 
