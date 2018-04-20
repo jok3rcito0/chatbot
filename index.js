@@ -21,7 +21,7 @@ app.post('/webhook', (req, res) => {
 			let sender_psid = webhook_event.sender.id;
 			let message = webhook_event.message;
 			console.log('---ENTRYYYY---');
-			console.log(entry);
+			console.log(webhook_event);
 			console.log('---ENTRYYYY---');
 			if(message && message.quick_reply){
 				executeAction(sender_psid, message.quick_reply.payload)
