@@ -33,8 +33,11 @@ app.post('/webhook', (req, res) => {
 					console.log(event.postback);
 
 					if(event.postback && event.postback.payload === 'GET_STARTED_PAYLOAD' ){
+						//sender Action
+						handleSenderAction(sender_psid);
 						let msg = { "text": "Antes de empezar, checa las instrucciones:" }
 						callSendAPI(sender_psid, msg);
+						handleSenderAction(sender_psid, 'typing_off');
 						startedPack(sender_psid);
 					}
 
@@ -49,6 +52,29 @@ app.post('/webhook', (req, res) => {
 	}
 
 });
+
+function handleSenderAction(sender_psid, action='typing_on'){
+	let request_body = {
+		"recipient": {
+			"id": sender_psid
+		},
+		"sender_action" : action
+	}
+
+	request({
+		"uri": "https://graph.facebook.com/v2.12/me/messages",
+		"qs": { "access_token": PAGE_ACCESS_TOKEN },
+		"method": "POST",
+		"json": request_body
+	}, (err, res, body) => {
+		if (!err) {
+			console.log('sender action ok!')
+		} else {
+			console.error("sender action error:" + err);
+		}
+	});
+	
+}
 
 //Handle send files
 function handleAttachment(sender_psid, received_message) {
@@ -148,6 +174,7 @@ function callSendAPI(sender_psid, response) {
 
 function startedPack(sender_psid){
 	handleAttachment(sender_psid, '416389662155453'); //gif 
+	//show menu with option
 }
 
 app.get('/webhook', (req, res) => {
