@@ -20,14 +20,14 @@ app.post('/webhook', (req, res) => {
 			let sender_psid = webhook_event.sender.id;
 
 			entry.messaging.forEach(function(event) {
+				console.log(event);
 				if(event.message){
 					//send response
 					if(webhook_event.message) {
-						handleSenderAction(sender_psid);
-						handleMessage(sender_psid, webhook_event.message);
+						//handleMessage(sender_psid, webhook_event.message);
 					}else if(webhook_event.postback) {
-						handleSenderAction(sender_psid);
-						handlePostback(sender_psid, webhook_event.postback);
+						//handleSenderAction(sender_psid);
+						//handlePostback(sender_psid, webhook_event.postback);
 					}
 				}else{
 					console.log(event.postback);
