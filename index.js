@@ -1,5 +1,38 @@
 'use strict';
 
+var mysql = require('mysql');
+var con   = mysql.createConnection({
+	host     : 'localhost',
+	user     : 'root',
+	password : 'olamund0.',
+	database : 'debolsillo'
+});
+
+con.connect(function(err) {
+	if (err) throw err;
+	console.log("It's connected");
+});
+/*
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+  var sql = "INSERT INTO customers (name, address) VALUES ('Company Inc', 'Highway 37')";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+});
+
+
+con.query('SELECT * FROM ', function (error, results, fields) {
+  if (error) throw error;
+  console.log('The solution is: ', results[0].solution);
+});
+
+con.end();
+*/
+
 const
 	PAGE_ACCESS_TOKEN = 'EAADEK2GJNwwBAKcDvnBWh8KZB8GylFiaKpi0gXpBazix9GsKZBYvWjG9xrDqXwu7IMLLZBs9R4DGPTMSNyJZB5zou3fCN5ZA9aofppe6DmOgQnzqJtt6MCyIeGzb3g4Pk5V492lVpsXGQiGgDAHCaJc7jpazydDIPINkLqzVhsDHFucMgsigR',
 	express    = require('express'),
@@ -20,9 +53,11 @@ app.post('/webhook', (req, res) => {
 			let webhook_event = entry.messaging[0];
 			let sender_psid = webhook_event.sender.id;
 			let message = webhook_event.message;
+			
 			console.log('---ENTRYYYY---');
 			console.log(webhook_event);
 			console.log('---ENTRYYYY---');
+
 			if(message && message.quick_reply){
 				executeAction(sender_psid, message.quick_reply.payload)
 			}else if(message && message.text){
